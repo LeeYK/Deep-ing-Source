@@ -1,5 +1,22 @@
 import flickr_api
 
+def safe_name(filename):
+    safe_string = str()
+    for c in filename:
+        if c.isalnum() or c in [' ','.','/']:
+            safe_string = safe_string + c
+
+        while safe_string.count("../"):
+            # I use a loop because only replacing once would 
+            # leave a hole in that a bad guy could enter ".../"
+            # which would be replaced to "../" so the loop 
+            # prevents tricks like this!
+            safe_string = safe_string.replace("../","./")
+        # Get rid of leading "./" combinations...
+        safe_string = safe_string.lstrip("./")
+    return safe_string
+
+
 flickr_api.set_keys(api_key = '38aebeef4e98f69fdd90f52b01819c23', api_secret = '04443e0373405fbf')
 
 a = flickr_api.auth.AuthHandler() #creates the AuthHandler object
@@ -29,4 +46,10 @@ for photo in photos:
     #filename = photo['title'] + '.jpg'
     filename = str(i) + '.jpg'
     print filename
-    photo.save(filename, size_label = 'Medium 640')
+    safe_string = safe_name(filename)
+    valid = safe_string == filename
+    if valid:
+        photo.save(filename, size_label = 'Medium 640')
+
+
+
