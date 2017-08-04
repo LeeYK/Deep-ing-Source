@@ -2,20 +2,20 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Placeholder(X): training set data
+# Variable(w): parameter to optimize
+# y: result value
+# t: training set data
+
+# Modeling
 x = tf.placeholder(tf.float32, [None, 5])
-
 w = tf.Variable(tf.zeros([5, 1]))
-
 y = tf.matmul(x, w)
-
 t = tf.placeholder(tf.float32, [None, 1])
-
 loss = tf.reduce_sum(tf.square(y-t))
+train_step = tf.train.AdamOptimizer().minimize(loss) # parameter optimization
 
-train_step = tf.train.AdamOptimizer().minimize(loss)
-
-
-
+# Execution(Training)
 sess = tf.Session()
 sess.run(tf.initialize_all_variables())
 
@@ -60,4 +60,3 @@ linex = np.linspace(1,12,100)
 liney = predict(linex)
 subplot.plot(linex,liney)
 plt.show()
-
