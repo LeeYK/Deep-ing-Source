@@ -17,7 +17,9 @@ train_step = tf.train.AdamOptimizer().minimize(loss) # parameter optimization
 
 # Execution(Training)
 sess = tf.Session()
-sess.run(tf.initialize_all_variables())
+#sess.run(tf.initialize_all_variables())
+init = tf.global_variables_initializer()
+sess.run(init)
 
 train_t = np.array([5.2, 5.7, 8.6, 14.9, 18.2, 20.4, 25.5, 26.4, 22.8, 17.5, 11.1, 6.6])
 
@@ -43,6 +45,7 @@ for _ in range(100000):
                 loss_val = sess.run(loss, feed_dict={x:train_x, t:train_t})
                 print ('Step: %d, Loss: %f' % (i, loss_val))
 
+# Session
 w_val = sess.run(w)
 print w_val
 
@@ -52,6 +55,7 @@ def predict(x):
 		result += w_val[n][0] * x**n
 	return result
 
+# Plot(Graph)
 fig = plt.figure()
 subplot = fig.add_subplot(1,1,1)
 subplot.set_xlim(1,12)
