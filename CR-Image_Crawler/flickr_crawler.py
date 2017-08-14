@@ -53,7 +53,11 @@ for photo in photos:
     safe_string = safe_name(filename)
     valid = safe_string == filename
     if valid:
-        photo.save(filename, size_label = 'Medium 640')
+        try:
+            photo.save(filename, size_label = "Medium 800")
+        except:
+            print "     error"
 
 
 
+    
