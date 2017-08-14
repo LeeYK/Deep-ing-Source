@@ -37,9 +37,13 @@ print url
 #    photo.save(filename, size_label = 'Medium 640')
 
 #flickr_api.Photo.search(tage = "rome")
-photos = flickr_api.Photo.getRecent()
+#photos = flickr_api.Photo.getRecent()
 
 i=0
+
+extras='url_c'
+photos = flickr_api.Photo.search(tags = "korea", extras = extras)
+
 for photo in photos:
     i=i+1
     #print photo['title']
