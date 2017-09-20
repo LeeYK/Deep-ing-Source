@@ -47,7 +47,7 @@ for _ in range(100000):
 
 # Session
 w_val = sess.run(w)
-print w_val
+print (w_val)
 
 def predict(x):
 	result = 0.0
