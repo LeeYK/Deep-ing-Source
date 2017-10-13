@@ -7,23 +7,24 @@ import numpy as np
 # The target vector Y is a column of MPG values for each car.
 X_file = np.genfromtxt('data_x.csv', delimiter=',', skip_header=1)
 N = np.shape(X_file)[0]
-X = np.hstack((np.ones(N).reshape(N, 1), X_file[:, 1].reshape(N, 1)))
-Y = X_file[:, 0]
+X = np.hstack((np.ones(N).reshape(N, 1), X_file[:N, 0].reshape(N, 1)))
+Y = X_file[:N, 1]
 
 # Standardize the input
-X[:, 1] = (X[:, 1]-np.mean(X[:, 1]))/np.std(X[:, 1])
+#X[:, 1] = (X[:, 1]-np.mean(X[:, 1]))/np.std(X[:, 1])
+Y = (Y-np.mean(Y))/np.std(Y)
 
 # There are two weights, the bias weight and the feature weight
 w = np.array([0, 0])
 
 # Start batch gradient descent, it will run for max_iter epochs and have a step
 # size eta
-max_iter = 100
+max_iter = 1000
 eta = 1E-3
 for t in range(0, max_iter):
     # We need to iterate over each data point for one epoch
     grad_t = np.array([0., 0.])
-    for i in range(0, N):
+    for i in range(0, 100):
         x_i = X[i, :]
         y_i = Y[i]
         # Dot product, computes h(x_i, w)
@@ -35,6 +36,8 @@ for t in range(0, max_iter):
 print ("Weights found:",w)
 
 # Plot the data and best fit line
+
+
 tt = np.linspace(np.min(X[:, 1]), np.max(X[:, 1]), 10)
 bf_line = w[0]+w[1]*tt
 
