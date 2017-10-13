@@ -6,7 +6,7 @@ import tensorflow as tf
 
 #LOAD data
 
-file_1 = np.genfromtxt('data/m4_z.csv', delimiter=',', skip_header=1)
+file_1 = np.genfromtxt('data/m4_x.csv', delimiter=',', skip_header=1)
 N = np.shape(file_1)[0]
 #data_x = file_1[:N, 0]
 #list(map(list, zip(data_x)))
@@ -24,7 +24,7 @@ data_y = data_y_ori[:half].reshape(half, 1)
 #        + 1.5 * np.sin(data_x) + np.random.randn(100, 1)
 # --------
 
-model_order = 5
+model_order = 4
 data_x = np.power(data_x, range(model_order))
 data_x /= np.max(data_x, axis=0)
 
@@ -51,7 +51,7 @@ with tf.name_scope("train"):
     cost_op = tf.reduce_mean(tf.pow(y-outputs, 2))
     train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_op)
 
-    tolerance = 1e-10
+    tolerance = 1e-4
 
 # Perform Stochastic Gradient Descent
 epochs = 1
@@ -89,8 +89,8 @@ with sess.as_default():
 
 
 tt = np.linspace(np.min(0), np.max(1))
-plt.plot(tt, w[4]*tt**4+w[3]*tt**3+w[2]*tt**2+w[1]*tt+w[0])
-#plt.plot(tt, w[3]*tt**3+w[2]*tt**2+w[1]*tt+w[0])
+#plt.plot(tt, w[4]*tt**4+w[3]*tt**3+w[2]*tt**2+w[1]*tt+w[0])
+plt.plot(tt, w[3]*tt**3+w[2]*tt**2+w[1]*tt+w[0])
 #plt.plot(tt, w[2]*tt**2+w[1]*tt+w[0])
 plt.plot(data_x_ori, data_y_ori, 'kx')
 
@@ -100,7 +100,7 @@ plt.plot(data_x_ori, data_y_ori, 'kx')
 
 plt.xlabel('frame')
 plt.ylabel('X')
-plt.title('Regression')
+#plt.title('Regression')
 
 plt.savefig('mpg.png')
 
