@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
+# reference: https://www.cs.toronto.edu/~frossard/post/multiple_linear_regression/
+
 #LOAD data
 
 file_1 = np.genfromtxt('data/m4_z.csv', delimiter=',', skip_header=1)
